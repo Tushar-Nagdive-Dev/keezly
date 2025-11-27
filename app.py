@@ -1,4 +1,4 @@
-# keezly/app.py (Full Code)
+# keezly/app.py (Corrected Path Resolution for Py2App)
 
 import os
 import sys
@@ -20,24 +20,54 @@ from data_manager import (
 APP_NAME = 'Keezly'
 DATA_FILE = 'data.json'
 STATIC_ROOT = 'static'
-# FIX: Use 'browser' to match your angular build output (static/browser)
 FRONTEND_DIST_NAME = 'browser' 
 DATA_MANAGER_BASE_DIR = None 
 
-# --- PATH RESOLUTION ---
+# --- PATH RESOLUTION (CRITICAL FIX) ---
 if getattr(sys, 'frozen', False):
-    # Py2app environment
-    DATA_MANAGER_BASE_DIR = os.path.dirname(sys.executable)
-    DATA_PATH = os.path.join(DATA_MANAGER_BASE_DIR, DATA_FILE)
+    # This block executes when bundled by py2app.
+    # The executable is located at Contents/MacOS/Keezly
     
-    # Path to Angular assets bundled inside the app
-    FRONTEND_DIST_FOLDER = os.path.join(sys._MEIPASS, STATIC_ROOT, FRONTEND_DIST_NAME)
+    exe_dir = os.path.dirname(sys.executable) # Path is .../Keezly.app/Contents/MacOS
+    
+    # 1. Go up one level to the 'Contents' folder:
+    CONTENTS_ROOT = os.path.dirname(exe_dir) # Path is .../Keezly.app/Contents
+    
+    # 2. Append 'Resources' to the Contents path:
+    RESOURCES_ROOT = os.path.join(CONTENTS_ROOT, 'Resources') 
+    
+    # Now, RESOURCES_ROOT is correctly set to: .../Keezly.app/Contents/Resources
+    
+    # Data file path (e.g., in Contents/Resources/data.json)
+    DATA_PATH = os.path.join(RESOURCES_ROOT, DATA_FILE)
+    DATA_MANAGER_BASE_DIR = RESOURCES_ROOT
+    
+    # Path to Angular assets bundled inside Resources/static/browser
+    FRONTEND_DIST_FOLDER = os.path.join(RESOURCES_ROOT, STATIC_ROOT, FRONTEND_DIST_NAME)    
+    # 2. CRITICAL CHANGE: PATH TO WRITABLE USER DATA
+    # Use the standard user path for application data (~/Library/Application Support/APP_NAME)
+    # This location is writable and specific to the user.
+    # We will use the user's home folder for simplicity here.
+    home_dir = os.path.expanduser("~")
+    # A cleaner path is typically ~/Library/Application Support/Keezly/data.json
+    # For simplicity, we use the user's home directory for now, but Application Support is preferred.
+    
+    # A simplified, reliable path for writable files:
+    WRITABLE_DATA_DIR = os.path.join(home_dir, '.keezly_data') # Hidden folder in home directory
+    
+    # Check if the writable folder exists, and create it if not
+    if not os.path.exists(WRITABLE_DATA_DIR):
+        os.makedirs(WRITABLE_DATA_DIR)
+        
+    DATA_PATH = os.path.join(WRITABLE_DATA_DIR, DATA_FILE)
+    DATA_MANAGER_BASE_DIR = WRITABLE_DATA_DIR 
+    
+
 else:
     # Development environment
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     DATA_MANAGER_BASE_DIR = BASE_DIR
     DATA_PATH = os.path.join(BASE_DIR, DATA_FILE)
-    
     FRONTEND_DIST_FOLDER = os.path.join(BASE_DIR, STATIC_ROOT, FRONTEND_DIST_NAME)
 
 
@@ -97,7 +127,6 @@ class Api:
 def start_app():
     # 1. Initialize data manager with the correct path 
     try:
-        # initialize_data_path no longer raises the key error on first run
         initialize_data_path(DATA_PATH) 
     except Exception as e:
         print(f"FATAL: Could not initialize data path: {e}")

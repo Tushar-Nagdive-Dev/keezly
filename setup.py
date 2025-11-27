@@ -1,26 +1,26 @@
-# keezly/setup.py
+# keezly/setup.py (Final Fix: Simplification)
 
 from setuptools import setup
 import os
 
 # --- PATH DEFINITIONS ---
-# BASE_DIR is the root of the Keezly project
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# The main Python script that starts the application
 APP = ['app.py']
 
 # Data files to include: your Angular build output folder
 DATA_FILES = [
-    # Include the entire 'static' folder containing your Angular assets
-    ('static', [os.path.join(BASE_DIR, 'static', 'browser')]),
+    # CRITICAL FIX: Explicitly list the folder path that app.py expects 
+    # and use the simple (Target, Source) format. This is the last variation 
+    # to guarantee the static/browser folder is placed in the Resources root.
+   ('static', ['static/browser'])
 ]
 
 # Options for the py2app tool
 OPTIONS = {
-    'argv_emulation': True,
-    'iconfile': 'assets/key.icns',  # OPTIONAL: Path to your application icon file (create one!)
-    'packages': ['webview', 'cryptography', 'pyperclip', 'setuptools'], # Include necessary Python dependencies
+    'argv_emulation': False,
+    'iconfile': 'assets/key.icns',
+    'packages': ['webview', 'cryptography', 'pyperclip', 'setuptools', 'cffi'], 
     'plist': {
         'CFBundleName': 'Keezly',
         'CFBundleDisplayName': 'Keezly Password Manager',
