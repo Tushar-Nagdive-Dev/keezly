@@ -1,0 +1,17 @@
+# Python 
+__pycache__
+build/
+dist/
+venv/
+data.json
+salt.key
+
+# Angular
+views/keezly-ui/node_modules/
+views/keezly-ui/.vscode/
+views/keezly-ui/.angular
+static/
+
+# macOS
+.DS_Store
+*.icns
