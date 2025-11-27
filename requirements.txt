@@ -1,0 +1,5 @@
+# Keezly/requirements.txt
+pywebview
+py2app
+cryptography
+pyperclip

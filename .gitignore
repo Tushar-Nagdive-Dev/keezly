@@ -11,7 +11,9 @@ views/keezly-ui/node_modules/
 views/keezly-ui/.vscode/
 views/keezly-ui/.angular
 static/
+package-lock.json
 
 # macOS
 .DS_Store
 *.icns
+coom.txt

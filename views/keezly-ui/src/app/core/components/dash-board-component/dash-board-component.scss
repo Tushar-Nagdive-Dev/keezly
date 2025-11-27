@@ -1,0 +1,47 @@
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  /* Use a light gray background for the main canvas */
+  background-color: #ededed;
+}
+
+.sidebar {
+  width: 250px;
+  min-width: 200px;
+  padding: 20px 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  /* Key macOS sidebar style: less translucent white background */
+  background-color: rgba(255, 255, 255, 0.85); 
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-area {
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* General macOS Button Style */
+.mac-button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+  background-color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.primary-button {
+  background-color: #007aff;
+  color: white;
+  border-color: #007aff;
+}

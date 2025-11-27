@@ -1,0 +1,28 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Use a subtle gray background for the overall app window */
+  background-color: #f0f0f0; 
+}
+
+.login-panel {
+  width: 340px;
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  
+  /* macOS Vibrancy Effect */
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.key-icon {
+  width: 60px;
+  height: 60px;
+  /* Add subtle shadow for depth */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); 
+}
