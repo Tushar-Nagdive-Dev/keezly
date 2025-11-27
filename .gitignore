@@ -12,6 +12,7 @@ views/keezly-ui/.vscode/
 views/keezly-ui/.angular
 static/
 package-lock.json
+keezly-logs.txt
 
 # macOS
 .DS_Store

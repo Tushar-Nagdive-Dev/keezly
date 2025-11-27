@@ -1,25 +1,29 @@
 <div class="login-container">
   <div class="login-panel mac-panel">
+    
     <div class="logo-area">
-      <img src="assets/key-icon.svg" alt="Keezly Key Icon" class="key-icon">
-      <h1>Keezly</h1>
+      <img src="keezly.png" alt="Keezly Key Icon" class="key-icon" />
+      <h1 class="title">Keezly</h1>
       <p class="subtitle">Secure Key Management</p>
     </div>
-    
-    <form (ngSubmit)="unlock()">
-      <input 
-        type="password" 
-        placeholder="Master Password" 
-        class="mac-input"
-        [(ngModel)]="masterPassword"
-        name="password"
-        required
-      >
-      <button type="submit" class="mac-button primary-button" [disabled]="!masterPassword">
-        Unlock Keezly
+
+    <form (ngSubmit)="unlock()" class="login-form">
+        <input
+          type="password"
+          placeholder="Enter Master Password"
+          class="mac-input"
+          [(ngModel)]="masterPassword"
+          name="password"
+          required
+        />
+
+      <button type="submit" class="mac-button primary-button" [disabled]="isLoading || !masterPassword">
+        <span *ngIf="!isLoading">Unlock Keezly</span>
+        <span *ngIf="isLoading" class="loader"></span>
       </button>
-      
+
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
     </form>
   </div>
 </div>

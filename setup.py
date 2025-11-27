@@ -19,7 +19,7 @@ DATA_FILES = [
 # Options for the py2app tool
 OPTIONS = {
     'argv_emulation': False,
-    'iconfile': 'assets/key.icns',
+    'iconfile': 'assets/keezly.icns',
     'packages': ['webview', 'cryptography', 'pyperclip', 'setuptools', 'cffi'], 
     'plist': {
         'CFBundleName': 'Keezly',
