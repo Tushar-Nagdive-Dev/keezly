@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 // NOTE: I'm assuming the paths to LoginComponent and DashBoardComponent are correct.
 import { LoginComponent } from './core/components/login-component/login-component';
-import { DashBoardComponent } from './core/components/dash-board-component/dash-board-component';
+import { DashboardComponent } from './core/components/dash-board-component/dash-board-component';
 import { CommonModule, AsyncPipe } from '@angular/common'; // Import AsyncPipe
 import { AppStateService } from './core/services/app-state.service';
 import { Observable } from 'rxjs'; // Import Observable for type safety
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs'; // Import Observable for type safety
     CommonModule, // For *ngIf
     AsyncPipe,    // For | async
     LoginComponent,
-    DashBoardComponent
+    DashboardComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

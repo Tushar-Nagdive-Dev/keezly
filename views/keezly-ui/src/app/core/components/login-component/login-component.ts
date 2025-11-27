@@ -77,4 +77,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  async unlockServe(): Promise<void> {
+    this.appStateService.setUnlocked();
+    this.isLoggedIn = true;
+  }
+
 }

@@ -1,99 +1,99 @@
-<div class="vault-container">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <input 
-        type="text" 
-        placeholder="Search Vault..." 
-        class="macOS-input macOS-search-field"
-        [(ngModel)]="searchQuery"
-        (ngModelChange)="applyFilter()"
-      >
+<div class="mac-dashboard" *ngIf="!loading; else loadingTpl">
+  <header class="topbar">
+    <div class="title">FlowMatch Vault</div>
+    <div class="actions">
+      <button class="btn">🔍 Search</button>
+      <button class="btn primary">+ Quick Add</button>
+      <button class="btn" (click)="lockVault()">🔒 Lock</button>
+      <img class="avatar" src="assets/avatar-placeholder.png" alt="profile">
     </div>
-    
-    <div class="category-list">
-      <a 
-        *ngFor="let cat of categories" 
-        class="category-item" 
-        [class.active]="selectedCategory === cat"
-        (click)="selectedCategory = cat; applyFilter()"
-      >
-        {{ cat }} 
-      </a>
-      <hr>
-      <a class="category-item secondary-link" (click)="lockApp()">
-        <span class="icon">🔒</span> Lock Vault
-      </a>
-    </div>
-  </aside>
+  </header>
 
-  <section class="item-list-view">
-    <header class="list-header">
-      <h2>Items ({{ filteredItems.length }})</h2>
-      <button class="macOS-button primary" (click)="addNewItem()">
-        <span class="icon">➕</span> New Item
-      </button>
-    </header>
-    
-    <div class="item-list-table">
-      <div class="table-header">
-        <span>Title</span>
-        <span>Username / Email</span>
-        <span>Category</span>
-        <span>Actions</span>
+  <main class="grid">
+    <!-- Security Score -->
+    <section class="card score-card">
+      <div class="score-left">
+        <div class="score">{{ data?.summary.securityScore }}</div>
+        <div class="score-label">Security Score</div>
       </div>
-      
-      <div 
-        *ngFor="let item of filteredItems" 
-        class="item-row"
-        [class.selected]="selectedItem && selectedItem.id === item.id"
-        (click)="selectItem(item)"
-      >
-        <span>{{ item.title }}</span>
-        <span>{{ item.username }}</span>
-        <span>{{ item.category }}</span>
-        <div class="item-actions">
-          <button title="Copy Username" (click)="$event.stopPropagation(); copyText(item.username!)">📋</button>
-          <button title="Copy Password" (click)="$event.stopPropagation(); copyText(item.password_encrypted!)">🔑</button>
+      <div class="score-right">
+        <div class="score-issues">
+          <div>Weak: <strong>{{ data?.summary.health.weak }}</strong></div>
+          <div>Reused: <strong>{{ data?.summary.health.reused }}</strong></div>
+          <div>Compromised: <strong>{{ data?.summary.health.compromised }}</strong></div>
+        </div>
+        <button class="btn small primary">Fix Now</button>
+      </div>
+    </section>
+
+    <!-- Connected Devices -->
+    <section class="card sessions-card">
+      <h4>Connected Devices</h4>
+      <ul class="session-list">
+        <li *ngFor="let s of data?.sessions">
+          <div>{{ s.device }}</div>
+          <div class="muted">{{ s.ip }} • {{ formatTime(s.lastSeen) }}</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Alerts -->
+    <section class="card alerts-card">
+      <h4>Alerts ({{ data?.alerts.length }})</h4>
+      <ul class="alerts-list">
+        <li *ngFor="let a of data?.alerts" [class.ack]="a.acknowledged">
+          <div class="alert-left">
+            <div class="badge" [ngClass]="severityClass(a.severity)">{{ a.severity | uppercase }}</div>
+            <div class="alert-summary">{{ a.summary }}</div>
+            <div class="muted">{{ formatTime(a.createdAt) }}</div>
+          </div>
+          <div class="alert-actions">
+            <button class="btn small" (click)="acknowledge(a)" [disabled]="a.acknowledged">{{ a.acknowledged ? 'Acked' : 'Acknowledge' }}</button>
+            <button class="btn small primary">Inspect</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Trends -->
+    <section class="card trends-card">
+      <h4>Score (last 14 days)</h4>
+      <div class="trend-chart">
+        <!-- Simple textual sparkline fallback; replace with chart library for production -->
+        <div class="sparkline">
+          <span *ngFor="let t of data?.trends" class="spark" [title]="t.date + ': ' + t.score" [style.height.%]="(t.score)">{{ '' }}</span>
         </div>
       </div>
-      
-      <div *ngIf="filteredItems.length === 0" class="empty-state">
-        No items found matching your criteria.
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="detail-panel" *ngIf="selectedItem">
-    <div class="detail-header">
-      <h3>{{ selectedItem.title || 'New Entry' }}</h3>
-      <button class="macOS-button secondary" (click)="selectedItem = null; isEditing = false">Close</button>
-    </div>
-    
-    <form class="detail-form">
-      <div class="form-group">
-        <label>Title (Service Name)</label>
-        <input type="text" [(ngModel)]="selectedItem.title" name="title" class="macOS-input">
-      </div>
-      
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" [(ngModel)]="selectedItem.username" name="username" class="macOS-input">
-      </div>
-      
-      <div class="form-group">
-        <label>Encrypted Password</label>
-        <div class="password-input-group">
-          <input type="text" [value]="selectedItem.password_encrypted" readonly class="macOS-input">
-          <button type="button" class="macOS-button secondary">Generate</button>
-        </div>
-      </div>
-      
-      <div class="form-actions">
-        <button type="button" class="macOS-button primary" (click)="saveItem(selectedItem)">Save Item</button>
-      </div>
-    </form>
-  </section>
-  <section class="detail-panel placeholder" *ngIf="!selectedItem">
-    <p>Select an item from the list or click "New Item" to manage an entry.</p>
-  </section>
+    <!-- Recent Activity -->
+    <section class="card activity-card">
+      <h4>Recent Activity</h4>
+      <ul class="activity-list">
+        <li *ngFor="let r of data?.recentActivity">
+          <div>{{ r.action }}</div>
+          <div class="muted">{{ r.detail }} • {{ formatTime(r.time) }}</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Backups -->
+    <section class="card backup-card">
+      <h4>Backups</h4>
+      <div>Last: {{ data?.summary.lastBackup | date:'medium' }}</div>
+      <button class="btn small">Create Backup</button>
+    </section>
+  </main>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    <div class="spinner"></div>
+    <div>Loading dashboard...</div>
+  </div>
+</ng-template>
+
+<div *ngIf="error" class="error-row">
+  {{ error }}
+  <button class="btn" (click)="load()">Retry</button>
 </div>
