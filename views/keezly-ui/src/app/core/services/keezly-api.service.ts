@@ -149,4 +149,8 @@ export class KeezlyApiService {
       return { success: false, message: 'Clipboard access failed.' };
     }
   }
+
+  async copyToClipboard(text: string): Promise<any> {
+    return this.api.copy_to_clipboard(text);
+  }
 }

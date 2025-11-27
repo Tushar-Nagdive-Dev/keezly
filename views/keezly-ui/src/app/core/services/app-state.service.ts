@@ -6,10 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AppStateService {
 
-  // Use a BehaviorSubject to hold the current state (default: locked)
   private _isLocked = new BehaviorSubject<boolean>(true);
-
-  // Expose the state as an Observable for components to subscribe to
   isLocked$ = this._isLocked.asObservable();
 
   constructor() { }
@@ -20,7 +17,13 @@ export class AppStateService {
   }
   
   /** Locks the app and switches state (called by DashboardComponent) */
-  setLocked(): void {
-    this._isLocked.next(true);
+  setLocked(isLocked: boolean = true): void { // Added optional parameter for clarity
+    this._isLocked.next(isLocked);
+  }
+  
+  // ⭐️ FIX: Added the missing showToast method
+  showToast(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'success'): void {
+    console.log(`[TOAST] ${type.toUpperCase()}: ${message}`);
+    // *** Actual implementation would trigger a visual notification component here ***
   }
 }

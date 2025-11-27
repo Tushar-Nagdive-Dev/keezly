@@ -1,27 +1,99 @@
-<div class="dashboard-layout">
-  <aside class="sidebar mac-panel">
-    <div class="header">
-      <h2 class="app-title">Keezly</h2>
+<div class="vault-container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <input 
+        type="text" 
+        placeholder="Search Vault..." 
+        class="macOS-input macOS-search-field"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="applyFilter()"
+      >
     </div>
-    <nav class="mac-nav">
-      <a class="nav-item active">All Items</a>
-      <a class="nav-item">Favorites</a>
-      <a class="nav-item">Settings</a>
-    </nav>
-    <div class="sidebar-footer">
-      <button class="mac-button" (click)="lockApp()">Lock App</button>
+    
+    <div class="category-list">
+      <a 
+        *ngFor="let cat of categories" 
+        class="category-item" 
+        [class.active]="selectedCategory === cat"
+        (click)="selectedCategory = cat; applyFilter()"
+      >
+        {{ cat }} 
+      </a>
+      <hr>
+      <a class="category-item secondary-link" (click)="lockApp()">
+        <span class="icon">🔒</span> Lock Vault
+      </a>
     </div>
   </aside>
 
-  <main class="content-area">
-    <header class="content-header">
-      <h3 class="page-title">All Items</h3>
-      <button class="mac-button primary-button">
-        + New Item
+  <section class="item-list-view">
+    <header class="list-header">
+      <h2>Items ({{ filteredItems.length }})</h2>
+      <button class="macOS-button primary" (click)="addNewItem()">
+        <span class="icon">➕</span> New Item
       </button>
     </header>
     
-    <div class="item-list mac-panel">
+    <div class="item-list-table">
+      <div class="table-header">
+        <span>Title</span>
+        <span>Username / Email</span>
+        <span>Category</span>
+        <span>Actions</span>
       </div>
-  </main>
+      
+      <div 
+        *ngFor="let item of filteredItems" 
+        class="item-row"
+        [class.selected]="selectedItem && selectedItem.id === item.id"
+        (click)="selectItem(item)"
+      >
+        <span>{{ item.title }}</span>
+        <span>{{ item.username }}</span>
+        <span>{{ item.category }}</span>
+        <div class="item-actions">
+          <button title="Copy Username" (click)="$event.stopPropagation(); copyText(item.username!)">📋</button>
+          <button title="Copy Password" (click)="$event.stopPropagation(); copyText(item.password_encrypted!)">🔑</button>
+        </div>
+      </div>
+      
+      <div *ngIf="filteredItems.length === 0" class="empty-state">
+        No items found matching your criteria.
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-panel" *ngIf="selectedItem">
+    <div class="detail-header">
+      <h3>{{ selectedItem.title || 'New Entry' }}</h3>
+      <button class="macOS-button secondary" (click)="selectedItem = null; isEditing = false">Close</button>
+    </div>
+    
+    <form class="detail-form">
+      <div class="form-group">
+        <label>Title (Service Name)</label>
+        <input type="text" [(ngModel)]="selectedItem.title" name="title" class="macOS-input">
+      </div>
+      
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" [(ngModel)]="selectedItem.username" name="username" class="macOS-input">
+      </div>
+      
+      <div class="form-group">
+        <label>Encrypted Password</label>
+        <div class="password-input-group">
+          <input type="text" [value]="selectedItem.password_encrypted" readonly class="macOS-input">
+          <button type="button" class="macOS-button secondary">Generate</button>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="macOS-button primary" (click)="saveItem(selectedItem)">Save Item</button>
+      </div>
+    </form>
+  </section>
+  <section class="detail-panel placeholder" *ngIf="!selectedItem">
+    <p>Select an item from the list or click "New Item" to manage an entry.</p>
+  </section>
 </div>
