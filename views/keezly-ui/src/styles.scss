@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+/* Keezly Global Background */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: url('./../public/stacked-waves-haikei.png')
+              center/cover no-repeat fixed;
+  background-color: #1a052a;  /* fallback */
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* A subtle global blur-glass feel */
+.app-root-shell {
+  backdrop-filter: blur(14px) saturate(180%);
+  min-height: 100vh;
+}

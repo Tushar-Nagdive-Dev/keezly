@@ -1,0 +1,31 @@
+<!-- src/app/core/components/feature-cards/feature-cards.component.html -->
+<section class="features-shell">
+  <header class="features-header">
+    <h1>Keezly Features</h1>
+    <p class="subtitle">Overview — click a card to open or to see the next step.</p>
+  </header>
+
+  <div class="cards-grid">
+    <article class="feature-card" *ngFor="let f of features">
+      <div class="card-top">
+        <div class="icon">{{ f.icon }}</div>
+        <div class="meta">
+          <div class="title">{{ f.title }}</div>
+          <div class="subtitle">{{ f.subtitle }}</div>
+        </div>
+        <div class="status" [ngClass]="statusClass(f.status)">
+          {{ f.status === 'done' ? 'Done' : (f.status === 'in-progress' ? 'In progress' : 'Planned') }}
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="desc">{{ f.description }}</p>
+      </div>
+
+      <div class="card-footer">
+        <button class="mac-button secondary" (click)="onAction(f)">{{ f.cta || 'Open' }}</button>
+        <button class="link" title="More info" (click)="onAlert(f.title + ' — ' + f.description)">Details</button>
+      </div>
+    </article>
+  </div>
+</section>

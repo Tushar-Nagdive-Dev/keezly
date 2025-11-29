@@ -7,23 +7,49 @@
       <p class="subtitle">Secure Key Management</p>
     </div>
 
-    <form (ngSubmit)="unlock()" class="login-form">
-        <input
-          type="password"
-          placeholder="Enter Master Password"
-          class="mac-input"
-          [(ngModel)]="masterPassword"
-          name="password"
-          required
-        />
+    <!-- Dev-mode banner: shown only when PyWebView bridge is not available -->
+    <div *ngIf="!hasBridge" class="dev-banner" role="status" aria-live="polite">
+      <div class="dev-banner-inner">
+        <div class="dev-info">
+          <strong>Development mode</strong>
+          <div class="muted">PyWebView bridge not found — UI is using local dev storage.</div>
+        </div>
+        <div class="dev-actions">
+          <button type="button" class="mac-button" (click)="quickUnlockDev()" title="Quick unlock for development">
+            Quick Unlock (Dev)
+          </button>
+        </div>
+      </div>
+    </div>
 
-      <button type="submit" class="mac-button primary-button" [disabled]="isLoading || !masterPassword">
+    <form (ngSubmit)="unlock()" class="login-form" aria-label="Master Password form" autocomplete="off">
+      <label class="visually-hidden" for="masterPassword">Master Password</label>
+      <input
+        id="masterPassword"
+        type="password"
+        placeholder="Enter Master Password"
+        class="mac-input"
+        [(ngModel)]="masterPassword"
+        name="password"
+        required
+        autocomplete="current-password"
+        aria-required="true"
+      />
+
+      <button
+        type="submit"
+        class="mac-button primary-button"
+        [disabled]="isLoading || !masterPassword"
+        aria-disabled="{{ isLoading || !masterPassword }}"
+      >
         <span *ngIf="!isLoading">Unlock Keezly</span>
-        <span *ngIf="isLoading" class="loader"></span>
+        <span *ngIf="isLoading" class="loader" aria-hidden="true"></span>
       </button>
 
-      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <p *ngIf="errorMessage" class="error-message" role="alert">{{ errorMessage }}</p>
 
+      <!-- Optional small hint to help devs (hidden in production use) -->
+      <p *ngIf="!hasBridge" class="dev-hint">Tip: Use <em>Quick Unlock</em> while building UI. Real unlock still uses the bridge when available.</p>
     </form>
   </div>
 </div>

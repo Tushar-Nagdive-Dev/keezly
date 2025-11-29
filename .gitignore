@@ -5,6 +5,7 @@ dist/
 venv/
 data.json
 salt.key
+.eggs
 
 # Angular
 views/keezly-ui/node_modules/

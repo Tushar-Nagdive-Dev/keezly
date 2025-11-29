@@ -1,7 +1,1 @@
-<ng-container *ngIf="isLocked$ | async; else dashboardContent">
-  <app-login-component></app-login-component>
-</ng-container>
-
-<ng-template #dashboardContent>
-  <app-dashboard></app-dashboard>
-</ng-template>
+<router-outlet></router-outlet>

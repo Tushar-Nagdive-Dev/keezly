@@ -1,0 +1,76 @@
+.
+├── app.py
+├── assets
+│   ├── keezly.icns
+│   └── key.icns
+├── coom.txt
+├── data_manager.py
+├── data.json
+├── keezly-logs.txt
+├── keezlyDirsStructure.txt
+├── README.md
+├── requirements.txt
+├── setup.py
+├── static
+│   ├── 3rdpartylicenses.txt
+│   ├── browser
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── keezly.png
+│   │   ├── main-2ERQEG2J.js
+│   │   ├── media
+│   │   │   └── stacked-waves-haikei-NC3NERN7.png
+│   │   ├── polyfills-5CFQRCPP.js
+│   │   ├── stacked-waves-haikei.png
+│   │   └── styles-5INURTSO.css
+│   └── prerendered-routes.json
+└── views
+    └── keezly-ui
+        ├── angular.json
+        ├── package-lock.json
+        ├── package.json
+        ├── public
+        │   ├── favicon.ico
+        │   ├── keezly.png
+        │   └── stacked-waves-haikei.png
+        ├── README.md
+        ├── src
+        │   ├── app
+        │   │   ├── app.config.ts
+        │   │   ├── app.html
+        │   │   ├── app.routes.ts
+        │   │   ├── app.scss
+        │   │   ├── app.spec.ts
+        │   │   ├── app.ts
+        │   │   └── core
+        │   │       ├── components
+        │   │       │   ├── dash-board-component
+        │   │       │   │   ├── dash-board-component.html
+        │   │       │   │   ├── dash-board-component.scss
+        │   │       │   │   ├── dash-board-component.spec.ts
+        │   │       │   │   └── dash-board-component.ts
+        │   │       │   └── login-component
+        │   │       │       ├── login-component.html
+        │   │       │       ├── login-component.scss
+        │   │       │       ├── login-component.spec.ts
+        │   │       │       └── login-component.ts
+        │   │       ├── data
+        │   │       │   └── dummy-data.ts
+        │   │       ├── models
+        │   │       │   ├── dashboard.models.ts
+        │   │       │   ├── item.ts
+        │   │       │   └── keezly-item.ts
+        │   │       ├── pywebview-api.d.ts
+        │   │       └── services
+        │   │           ├── app-state.service.ts
+        │   │           ├── app-state.spec.ts
+        │   │           ├── keezly-api-service.spec.ts
+        │   │           └── keezly-api.service.ts
+        │   ├── index.html
+        │   ├── main.ts
+        │   └── styles.scss
+        ├── tsconfig.app.json
+        ├── tsconfig.json
+        └── tsconfig.spec.json
+
+17 directories, 57 files
