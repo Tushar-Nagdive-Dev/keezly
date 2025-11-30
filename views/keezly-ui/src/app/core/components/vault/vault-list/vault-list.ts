@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { VaultItem } from '../models/vault-item.model';
 import { VaultStorageService } from '../services/vault-storage.service';
 import { VaultUiService } from '../services/vault-ui.service';
@@ -7,21 +8,31 @@ import { VaultUiService } from '../services/vault-ui.service';
   selector: 'app-vault-list',
   standalone: false,
   templateUrl: './vault-list.html',
-  styleUrl: './vault-list.scss',
+  styleUrls: ['./vault-list.scss']
 })
 export class VaultList implements OnInit {
-
   items: VaultItem[] = [];
   filtered: VaultItem[] = [];
   loading = true;
   q = '';
 
+  private subs = new Subscription();
+
   constructor(
     private storage: VaultStorageService,
     private ui: VaultUiService
   ) {}
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // reload items when something is saved/deleted
+    this.subs.add(this.ui.onSaved$.subscribe(() => this.reload()));
+    this.subs.add(this.ui.onDeleted$.subscribe(() => this.reload()));
+
+    this.reload();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   async reload() {
@@ -62,5 +73,16 @@ export class VaultList implements OnInit {
   viewItem(item: VaultItem) {
     this.ui.setActive(item);
     this.ui.openView(true);
+  }
+
+  async deleteItem(item: VaultItem) {
+    if (!item || item.id == null) return;
+    if (!confirm(`Delete "${item.title}"? This cannot be undone.`)) return;
+    const resp = await this.storage.delete(Number(item.id));
+    if (resp.success) {
+      this.ui.notifyDeleted(Number(item.id));
+    } else {
+      alert('Delete failed: ' + (resp.message || 'unknown'));
+    }
   }
 }

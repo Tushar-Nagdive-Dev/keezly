@@ -1,21 +1,42 @@
+<!-- editor modal (theme-friendly, centered) -->
 <div *ngIf="open" class="modal-backdrop" (click)="close()"></div>
-<div *ngIf="open" class="editor-modal" role="dialog">
-  <h3>{{ item?.id ? 'Edit credential' : 'Add credential' }}</h3>
-  <form (submit)="save(); $event.preventDefault()">
-    <label>Title<input [(ngModel)]="item!.title" name="title" required /></label>
-    <label>Username<input [(ngModel)]="item!.username" name="username" /></label>
-    <label>Password
-      <div class="pw-row">
-        <input [(ngModel)]="item!.password" name="password" />
-        <button type="button" (click)="generate()">Generate</button>
-      </div>
-    </label>
-    <label>URL<input [(ngModel)]="item!.url" name="url" /></label>
-    <label>Notes<textarea [(ngModel)]="item!.notes" name="notes"></textarea></label>
 
-    <div class="actions">
-      <button type="submit" class="mac-button">{{ saving ? 'Saving…' : 'Save' }}</button>
-      <button type="button" class="mac-button outline" (click)="close()">Cancel</button>
+<div *ngIf="open" class="editor-modal" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+  <div class="editor-header">
+    <h3>{{ item?.id ? 'Edit credential' : 'Add credential' }}</h3>
+    <button class="btn-close" (click)="close()">✕</button>
+  </div>
+
+  <form class="editor-form" (ngSubmit)="save()" autocomplete="off">
+    <div class="form-row">
+      <label>Title
+        <input [(ngModel)]="item!.title" name="title" required />
+      </label>
+
+      <label>Username
+        <input [(ngModel)]="item!.username" name="username" />
+      </label>
+    </div>
+
+    <div class="form-row">
+      <label>Password
+        <div class="pw-row">
+          <input [(ngModel)]="item!.password" name="password" />
+          <button type="button" class="btn-gen" (click)="generate()" title="Generate strong password">Generate</button>
+        </div>
+      </label>
+
+      <label>URL
+        <input [(ngModel)]="item!.url" name="url" />
+      </label>
+    </div>
+
+    <label>Notes</label>
+    <textarea [(ngModel)]="item!.notes" name="notes"></textarea>
+    
+    <div class="editor-actions">
+      <button class="mac-button" type="submit" [disabled]="saving">{{ saving ? 'Saving…' : 'Save' }}</button>
+      <button class="mac-button outline" type="button" (click)="close()">Cancel</button>
     </div>
   </form>
 </div>

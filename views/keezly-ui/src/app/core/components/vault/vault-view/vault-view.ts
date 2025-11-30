@@ -23,6 +23,6 @@ export class VaultView {
   close() { this.ui.openView(false); }
 
   toggleReveal() { this.revealing = !this.revealing; if (this.revealing) setTimeout(()=> this.revealing = false, 12000); }
-  copy() { if (this.item) this.storage.copyToClipboard(this.item.password || ''); }
+  copy() { if (this.item) this.storage.copyText(this.item.password || ''); }
   edit() { if (this.item) this.ui.openEditor(true); this.ui.openView(false); }
 }

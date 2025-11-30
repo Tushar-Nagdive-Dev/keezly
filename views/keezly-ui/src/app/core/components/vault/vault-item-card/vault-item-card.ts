@@ -36,8 +36,15 @@ export class VaultItemCard implements OnInit{
   }
 
   async copyPassword() {
-    await this.storage.copyToClipboard(this.item.password || '');
-    // you can trigger a toast here
+    if (!this.item?.password) return;
+
+    const resp = await this.storage.copyText(this.item.password);
+
+    if (resp?.success) {
+      console.log('Copied!');
+    } else {
+      console.warn('Copy failed');
+    }
   }
 
   onEdit() {
