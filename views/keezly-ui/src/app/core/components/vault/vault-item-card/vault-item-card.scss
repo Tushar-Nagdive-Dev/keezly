@@ -1,5 +1,40 @@
-.card { padding:12px; border-radius:10px; background: rgba(255,255,255,0.02); box-shadow: 0 8px 20px rgba(0,0,0,0.16); }
-.top { display:flex; gap:10px; align-items:center; }
-.favicon { width:44px; height:44px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.03); font-weight:700; }
-.cta button { margin-left:6px; background:transparent; border:none; cursor:pointer; }
-.field { display:flex; gap:12px; margin-top:8px; }
+/* card */
+.card {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 18px;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 50px rgba(3,6,40,0.32), inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.top { display:flex; align-items:center; gap:14px; }
+.favicon {
+  width:48px; height:48px; border-radius:12px; display:grid; place-items:center;
+  background: linear-gradient(180deg,#b86ffb,#6fc6ff);
+  font-weight:700;
+  color:#fff;
+}
+.meta { flex:1;
+  .title { font-size:20px; font-weight:700; }
+  .sub { font-size:13px; color: rgba(255,255,255,0.85); margin-top:4px; }
+}
+
+.cta { display:flex; gap:8px; }
+.icon {
+  width:40px; height:40px; border-radius:10px;
+  background: rgba(255,255,255,0.03);
+  border: none;
+  display:grid; place-items:center;
+  cursor:pointer;
+}
+
+/* body */
+.body { margin-top:12px; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.02); }
+.field { display:flex; gap:10px; align-items:center; margin-bottom:8px;
+  label { width:72px; font-size:12px; color: rgba(255,255,255,0.8); }
+  .pw { font-weight:600; color:#fff; }
+}

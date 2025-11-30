@@ -1,47 +1,23 @@
-<article class="vault-card">
-  <header class="top-row">
-    <div class="favicon">
-      {{ item.title.charAt(0).toUpperCase() }}
-    </div>
-
+<article class="card" role="article">
+  <div class="top">
+    <div class="favicon">{{ (item.title || '?').charAt(0).toUpperCase() }}</div>
     <div class="meta">
       <div class="title">{{ item.title }}</div>
-      <div class="sub">
-        {{ item.username || item.url || 'No metadata' }}
-      </div>
+      <div class="sub">{{ item.username || item.url || '—' }}</div>
     </div>
 
-    <div class="actions">
-      <button class="icon-btn" (click)="toggleReveal()" title="Reveal password">
-        <span *ngIf="!revealing">👁️</span>
-        <span *ngIf="revealing">🙈</span>
-      </button>
-
-      <button class="icon-btn" (click)="copyPassword()" title="Copy password">
-        📋
-      </button>
-
-      <button class="icon-btn" (click)="onEdit()" title="Edit">
-        ✏️
-      </button>
-
-      <button class="icon-btn" (click)="onView()" title="View details">
-        🔍
-      </button>
+    <div class="cta">
+      <button class="icon" title="Reveal" (click)="toggleReveal()">👁</button>
+      <button class="icon" title="Copy" (click)="copyPassword()">📋</button>
+      <button class="icon" title="Edit" (click)="onEdit()">✏️</button>
+      <button class="icon" title="View" (click)="onView()">🔍</button>
     </div>
-  </header>
+  </div>
 
-  <section class="body">
-    <div class="field">
-      <label>URL</label>
-      <div class="value">{{ item.url || '—' }}</div>
+  <div class="body">
+    <div class="field"><label>URL</label><div>{{ item.url || '—' }}</div></div>
+    <div class="field"><label>Password</label>
+      <div class="pw">{{ revealing ? item.password : '• • • • • • • •' }}</div>
     </div>
-
-    <div class="field">
-      <label>Password</label>
-      <div class="value">
-        {{ revealing ? item.password : '••••••••••••' }}
-      </div>
-    </div>
-  </section>
+  </div>
 </article>

@@ -1,53 +1,60 @@
+/* editor modal styled for Keezly theme */
 .modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(3,8,22,0.55);
-  backdrop-filter: blur(4px);
-  z-index: 900;
+  position: fixed; inset: 0;
+  background: rgba(4,10,40,0.5);
+  backdrop-filter: blur(6px);
+  z-index: 60;
 }
 
-/* Editor card centered */
 .editor-modal {
   position: fixed;
-  left: 50%;
-  top: 50%;
+  left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 720px;
-  max-width: calc(100% - 32px);
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  width: 820px;
+  max-width: calc(100% - 40px);
   border-radius: 14px;
-  padding: 18px;
-  z-index: 910;
-  box-shadow: 0 20px 60px rgba(2,2,8,0.5);
+  padding: 26px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 22px 60px rgba(3,6,40,0.6);
+  z-index: 70;
+  color: #fff;
 }
 
-/* header */
-.editor-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
-.editor-header h3 { margin:0; color:#f3eaff; font-size:18px; }
-.btn-close { background:transparent; border:none; color:#fff; font-size:18px; cursor:pointer; }
+.modal-title { margin: 0 0 12px 0; font-size: 22px; font-weight: 700; color: #f3eaff; }
 
-/* form */
-.editor-form { display:flex; flex-direction:column; gap:12px; }
-.form-row { display:flex; gap:12px; }
-.form-row label { flex:1; display:flex; flex-direction:column; gap:6px; color:rgba(255,255,255,0.92); font-size:13px; }
-input, textarea { padding:10px 12px; border-radius:10px; border:none; background: rgba(255,255,255,0.03); color:#fff; outline:none; }
-textarea { 
-  min-height:20px; 
-  min-width: 600px;
-  resize:vertical; 
+.editor-form { display:flex; flex-direction:column; gap:14px; }
+
+.row { display:flex; gap:12px; }
+
+.field {
+  display:flex; flex-direction:column;
+  flex: 1;
+  .label-text { font-size: 13px; color: rgba(255,255,255,0.75); margin-bottom:6px; }
+  input, textarea {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+    outline: none;
+  }
+  textarea { min-height: 84px; resize:vertical; }
+}
+.field.wide { flex: 1.2; }
+
+.pw-row { display:flex; gap:8px; align-items:center;
+  input { flex: 1; }
+  .gen-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #7b61ff, #3fb0ff);
+    color: white;
+    box-shadow: 0 6px 18px rgba(63,176,255,0.16);
+  }
 }
 
-/* password row */
-.pw-row { display:flex; gap:8px; align-items:center; }
-.btn-gen { padding:8px 10px; border-radius:8px; background: linear-gradient(180deg,#fff,#fff7e6); color:#7a3f00; border:none; cursor:pointer; }
-
-/* actions */
-.editor-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:6px; }
+.actions { display:flex; gap:10px; justify-content:flex-end; margin-top:6px; }
 .mac-button { padding:10px 14px; border-radius:10px; }
-.outline { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: #fff; }
-
-/* responsive */
-@media (max-width: 880px) {
-  .editor-modal { width: 92%; padding: 14px; }
-  .form-row { flex-direction: column; }
-}
+.outline { background: transparent; border: 1px solid rgba(255,255,255,0.06); }

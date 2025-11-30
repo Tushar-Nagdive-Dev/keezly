@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// src/app/features/vault/components/vault-item-card/vault-item-card.component.ts
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { VaultItem } from '../models/vault-item.model';
 import { VaultStorageService } from '../services/vault-storage.service';
 
@@ -6,52 +7,29 @@ import { VaultStorageService } from '../services/vault-storage.service';
   selector: 'app-vault-item-card',
   standalone: false,
   templateUrl: './vault-item-card.html',
-  styleUrl: './vault-item-card.scss',
+  styleUrls: ['./vault-item-card.scss']
 })
-export class VaultItemCard implements OnInit{
-
-  @Input() 
-  item!: VaultItem;
-
-  @Output()
-  edit = new EventEmitter<void>();
-
-  @Output() 
-  view = new EventEmitter<void>();
-
+export class VaultItemCard {
+  @Input() item!: VaultItem;
+  @Output() edit = new EventEmitter<VaultItem>();
+  @Output() view = new EventEmitter<VaultItem>();
   revealing = false;
 
-  deleting = false;
+  constructor(private storage: VaultStorageService) {}
 
-  constructor(
-    private storage: VaultStorageService
-  ) {}
-
-  ngOnInit(): void {
-    console.log('VaultItemCard initialized');
-  }
-
-  toggleReveal() { 
-    this.revealing = !this.revealing; 
+  toggleReveal() {
+    this.revealing = !this.revealing;
+    if (this.revealing) setTimeout(() => this.revealing = false, 10000);
   }
 
   async copyPassword() {
-    if (!this.item?.password) return;
-
-    const resp = await this.storage.copyText(this.item.password);
-
-    if (resp?.success) {
-      console.log('Copied!');
-    } else {
-      console.warn('Copy failed');
-    }
+    const pwd = this.item?.password ?? '';
+    try {
+      const r = await this.storage.copyText(pwd); // ensure storage.copy() exists
+      // optionally show toast
+    } catch (e) { console.error('copy failed', e); }
   }
 
-  onEdit() {
-    this.edit.emit();
-  }
-
-  onView() {
-    this.view.emit();
-  }
+  onEdit() { this.edit.emit(this.item); }
+  onView() { this.view.emit(this.item); }
 }

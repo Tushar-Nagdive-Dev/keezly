@@ -17,3 +17,16 @@ def save_item(new_item):
 
     save_file_encrypted(items)
     return {"success": True, "item": new_item}
+
+def delete_item(item_id):
+    try:
+        items = load_file_decrypted()
+        new_items = [it for it in items if it.get("id") != item_id]
+        if len(new_items) == len(items):
+            return {"success": False, "message": "Item not found."}
+        save_file_encrypted(new_items)
+        return {"success": True, "deleted_id": item_id}
+    except PermissionError:
+        return {"success": False, "message": "Application is locked."}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
