@@ -8,7 +8,7 @@ export interface KeezlyItem {
   url?: string;
   notes?: string;
   
-  // Custom properties used by your Python backend:
+  // Custom properties used by your Python core:
   password_encrypted?: string; // The field received/sent to Python for storage
   category?: string;
   last_modified?: string;

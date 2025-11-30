@@ -1,0 +1,4 @@
+.modal-backdrop { position:fixed; inset:0; background: rgba(0,0,0,0.45); z-index:50; }
+.editor-modal { position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); z-index:60; background: rgba(255,255,255,0.02); padding:18px; border-radius:10px; width:640px; max-width:94%; }
+.pw-row { display:flex; gap:8px; align-items:center; }
+.actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }

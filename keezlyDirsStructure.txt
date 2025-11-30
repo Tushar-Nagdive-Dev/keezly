@@ -4,10 +4,23 @@
 │   ├── keezly.icns
 │   └── key.icns
 ├── coom.txt
+├── core
+│   ├── __init__.py
+│   ├── api
+│   │   └── exposed_api.py
+│   ├── config.py
+│   ├── security
+│   │   ├── crypto_engine.py
+│   │   ├── key_derivation.py
+│   │   └── lock_manager.py
+│   └── storage
+│       ├── file_store.py
+│       └── item_repository.py
 ├── data_manager.py
 ├── data.json
 ├── keezly-logs.txt
 ├── keezlyDirsStructure.txt
+├── LICENSE
 ├── README.md
 ├── requirements.txt
 ├── setup.py
@@ -17,12 +30,12 @@
 │   │   ├── favicon.ico
 │   │   ├── index.html
 │   │   ├── keezly.png
-│   │   ├── main-2ERQEG2J.js
+│   │   ├── main-MFGFUHCQ.js
 │   │   ├── media
 │   │   │   └── stacked-waves-haikei-NC3NERN7.png
 │   │   ├── polyfills-5CFQRCPP.js
 │   │   ├── stacked-waves-haikei.png
-│   │   └── styles-5INURTSO.css
+│   │   └── styles-KRYGPATZ.css
 │   └── prerendered-routes.json
 └── views
     └── keezly-ui
@@ -44,16 +57,26 @@
         │   │   ├── app.ts
         │   │   └── core
         │   │       ├── components
-        │   │       │   ├── dash-board-component
-        │   │       │   │   ├── dash-board-component.html
-        │   │       │   │   ├── dash-board-component.scss
-        │   │       │   │   ├── dash-board-component.spec.ts
-        │   │       │   │   └── dash-board-component.ts
-        │   │       │   └── login-component
-        │   │       │       ├── login-component.html
-        │   │       │       ├── login-component.scss
-        │   │       │       ├── login-component.spec.ts
-        │   │       │       └── login-component.ts
+        │   │       │   ├── dashboard-shell
+        │   │       │   │   ├── dashboard-shell.html
+        │   │       │   │   ├── dashboard-shell.scss
+        │   │       │   │   ├── dashboard-shell.spec.ts
+        │   │       │   │   └── dashboard-shell.ts
+        │   │       │   ├── feature-cards.component
+        │   │       │   │   ├── feature-cards.component.html
+        │   │       │   │   ├── feature-cards.component.scss
+        │   │       │   │   ├── feature-cards.component.spec.ts
+        │   │       │   │   └── feature-cards.component.ts
+        │   │       │   ├── login-component
+        │   │       │   │   ├── login-component.html
+        │   │       │   │   ├── login-component.scss
+        │   │       │   │   ├── login-component.spec.ts
+        │   │       │   │   └── login-component.ts
+        │   │       │   └── vault-list
+        │   │       │       ├── vault-list.html
+        │   │       │       ├── vault-list.scss
+        │   │       │       ├── vault-list.spec.ts
+        │   │       │       └── vault-list.ts
         │   │       ├── data
         │   │       │   └── dummy-data.ts
         │   │       ├── models
@@ -64,6 +87,7 @@
         │   │       └── services
         │   │           ├── app-state.service.ts
         │   │           ├── app-state.spec.ts
+        │   │           ├── auth-guard.service.ts
         │   │           ├── keezly-api-service.spec.ts
         │   │           └── keezly-api.service.ts
         │   ├── index.html
@@ -73,4 +97,4 @@
         ├── tsconfig.json
         └── tsconfig.spec.json
 
-17 directories, 57 files
+23 directories, 75 files

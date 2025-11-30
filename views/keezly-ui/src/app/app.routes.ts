@@ -28,13 +28,11 @@ export const routes: Routes = [
         component: FeatureCardsComponent, 
         canActivate: [AuthGaurd] 
     },
-      // Vault list route (create VaultListComponent when ready)
-    //   { 
-    //     path: 'vault', 
-    //     component: VaultListComponent, 
-    //     canActivate: [AuthGaurd] 
-    // },
-      // add additional child routes here (settings, profile, imports, etc.)
+    {
+      path: 'vault',
+      canActivate: [AuthGaurd],
+      loadChildren: () => import('./core/components/vault/vault.module').then(m => m.VaultModule)
+    }
     ]
   },
 

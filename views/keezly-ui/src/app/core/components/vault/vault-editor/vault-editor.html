@@ -1,0 +1,21 @@
+<div *ngIf="open" class="modal-backdrop" (click)="close()"></div>
+<div *ngIf="open" class="editor-modal" role="dialog">
+  <h3>{{ item?.id ? 'Edit credential' : 'Add credential' }}</h3>
+  <form (submit)="save(); $event.preventDefault()">
+    <label>Title<input [(ngModel)]="item!.title" name="title" required /></label>
+    <label>Username<input [(ngModel)]="item!.username" name="username" /></label>
+    <label>Password
+      <div class="pw-row">
+        <input [(ngModel)]="item!.password" name="password" />
+        <button type="button" (click)="generate()">Generate</button>
+      </div>
+    </label>
+    <label>URL<input [(ngModel)]="item!.url" name="url" /></label>
+    <label>Notes<textarea [(ngModel)]="item!.notes" name="notes"></textarea></label>
+
+    <div class="actions">
+      <button type="submit" class="mac-button">{{ saving ? 'Saving…' : 'Save' }}</button>
+      <button type="button" class="mac-button outline" (click)="close()">Cancel</button>
+    </div>
+  </form>
+</div>

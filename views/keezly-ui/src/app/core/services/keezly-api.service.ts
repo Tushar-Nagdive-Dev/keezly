@@ -24,14 +24,16 @@ interface PyWebViewWindow extends Window {
 const pywebviewWindow = window as PyWebViewWindow;
 
 // Define the shape of a key/password item for clarity
-interface KeezlyItem {
+type KeezlyItem = {
   id: number | null;
   title: string;
-  username: string;
+  username?: string;
   password?: string;
   url?: string;
   notes?: string;
-}
+  created_at?: string;
+  updated_at?: string;
+};
 
 // Define the standard API response structure
 interface ApiResponse {

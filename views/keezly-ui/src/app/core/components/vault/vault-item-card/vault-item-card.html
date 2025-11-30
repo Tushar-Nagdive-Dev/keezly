@@ -1,0 +1,23 @@
+<article class="card">
+  <div class="top">
+    <div class="favicon">{{ item.title.charAt(0).toUpperCase() }}</div>
+    <div class="meta">
+      <div class="title">{{ item.title }}</div>
+      <div class="sub">{{ item.username || item.url || '—' }}</div>
+    </div>
+
+    <div class="cta">
+      <button (click)="toggleReveal()" title="Reveal">👁</button>
+      <button (click)="copyPassword()" title="Copy">📋</button>
+      <button (click)="onEdit()" title="Edit">✏️</button>
+      <button (click)="onView()" title="View">🔍</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="field"><label>URL</label><div>{{ item.url || '—' }}</div></div>
+    <div class="field"><label>Password</label>
+      <div>{{ revealing ? item.password : '••••••••' }}</div>
+    </div>
+  </div>
+</article>

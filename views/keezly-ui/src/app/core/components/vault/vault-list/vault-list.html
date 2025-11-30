@@ -1,0 +1,31 @@
+<section class="vault-list-shell">
+  <header class="vault-list-header">
+    <div>
+      <h2>Vault</h2>
+      <p class="muted">Your encrypted credentials</p>
+    </div>
+
+    <div class="actions">
+      <input placeholder="Search..." [(ngModel)]="q" (ngModelChange)="search()" />
+      <button (click)="openNew()" class="mac-button">+ Add</button>
+      <button (click)="reload()" class="mac-button outline">Refresh</button>
+    </div>
+  </header>
+
+  <div *ngIf="loading" class="loader">Loading…</div>
+
+  <div class="grid" *ngIf="!loading">
+    <app-vault-item-card
+      *ngFor="let it of filtered"
+      [item]="it"
+      (edit)="editItem(it)"
+      (view)="viewItem(it)">
+    </app-vault-item-card>
+  </div>
+
+  <!-- editor & view & delete dialog are global via ui service, append them in template
+       so they exist in the DOM and subscribe to VaultUiService state -->
+  <app-vault-editor></app-vault-editor>
+  <app-vault-view></app-vault-view>
+  <app-vault-delete-dialog></app-vault-delete-dialog>
+</section>

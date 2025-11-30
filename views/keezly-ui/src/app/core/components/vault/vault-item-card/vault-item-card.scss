@@ -1,0 +1,5 @@
+.card { padding:12px; border-radius:10px; background: rgba(255,255,255,0.02); box-shadow: 0 8px 20px rgba(0,0,0,0.16); }
+.top { display:flex; gap:10px; align-items:center; }
+.favicon { width:44px; height:44px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.03); font-weight:700; }
+.cta button { margin-left:6px; background:transparent; border:none; cursor:pointer; }
+.field { display:flex; gap:12px; margin-top:8px; }
