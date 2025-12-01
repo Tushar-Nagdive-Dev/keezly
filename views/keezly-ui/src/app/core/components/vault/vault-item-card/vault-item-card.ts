@@ -14,6 +14,7 @@ export class VaultItemCard {
   @Output() edit = new EventEmitter<VaultItem>();
   @Output() view = new EventEmitter<VaultItem>();
   revealing = false;
+  @Input() gradIndex = 0;
 
   constructor(private storage: VaultStorageService) {}
 

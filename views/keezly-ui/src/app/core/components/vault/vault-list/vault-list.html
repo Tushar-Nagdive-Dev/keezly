@@ -14,12 +14,20 @@
 
   <div *ngIf="loading" class="loader">Loading…</div>
 
-  <div class="grid" *ngIf="!loading && filtered.length > 0">
+  <!-- <div class="grid" *ngIf="!loading && filtered.length > 0">
     <app-vault-item-card
       *ngFor="let it of filtered"
       [item]="it"
       (edit)="editItem(it)"
       (view)="viewItem(it)">
+    </app-vault-item-card>
+  </div> -->
+
+  <div class="cards-grid">
+    <app-vault-item-card
+      *ngFor="let it of filtered; let i = index"
+      [item]="it"
+      [gradIndex]="i % 5">
     </app-vault-item-card>
   </div>
 

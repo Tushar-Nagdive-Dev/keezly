@@ -27,3 +27,10 @@ export interface PasswordResponse {
   password?: string;
   message?: string;
 }
+
+export interface Toast {
+  id?: number;
+  message: string;
+  type: 'success' | 'error' | 'info';
+  timeout?: number; // in milliseconds
+}

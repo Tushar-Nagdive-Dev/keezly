@@ -1,23 +1,40 @@
-<article class="card" role="article">
-  <div class="top">
-    <div class="favicon">{{ (item.title || '?').charAt(0).toUpperCase() }}</div>
-    <div class="meta">
-      <div class="title">{{ item.title }}</div>
-      <div class="sub">{{ item.username || item.url || '—' }}</div>
+<article class="card" [attr.data-grad]="gradIndex" role="article">
+
+  <div class="card-inner">
+    <div class="left-pill" aria-hidden="true">
+      <div class="pill-initial">{{ (item.title || '?').charAt(0).toUpperCase() }}</div>
     </div>
 
-    <div class="cta">
-      <button class="icon" title="Reveal" (click)="toggleReveal()">👁</button>
-      <button class="icon" title="Copy" (click)="copyPassword()">📋</button>
-      <button class="icon" title="Edit" (click)="onEdit()">✏️</button>
-      <button class="icon" title="View" (click)="onView()">🔍</button>
+    <div class="content-wrap">
+      <div class="top">
+        <div class="meta">
+          <div class="title">{{ item.title }}</div>
+          <div class="sub">{{ item.username || item.url || '—' }}</div>
+        </div>
+
+        <div class="cta" aria-hidden="true">
+          <button class="icon" (click)="toggleReveal()" title="Reveal">👁</button>
+          <button class="icon" (click)="copyPassword()" title="Copy">📋</button>
+          <button class="icon" (click)="onEdit()" title="Edit">✏️</button>
+          <button class="icon" (click)="onView()" title="View">🔍</button>
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="field">
+          <label>URL</label>
+          <div class="value url">{{ item.url || '—' }}</div>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="value password">
+            <span *ngIf="revealing && item.password">{{ item.password }}</span>
+            <span *ngIf="!revealing">{{ '•'.repeat(8) }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="body">
-    <div class="field"><label>URL</label><div>{{ item.url || '—' }}</div></div>
-    <div class="field"><label>Password</label>
-      <div class="pw">{{ revealing ? item.password : '• • • • • • • •' }}</div>
-    </div>
-  </div>
 </article>
