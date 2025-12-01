@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
-import { DashboardData } from '../models/dashboard.models';
-import { DUMMY_DASHBOARD } from '../data/dummy-data';
 
 @Injectable({
   providedIn: 'root',

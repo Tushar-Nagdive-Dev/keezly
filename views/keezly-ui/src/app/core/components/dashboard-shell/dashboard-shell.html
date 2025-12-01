@@ -1,0 +1,44 @@
+<!-- src/app/core/components/dashboard-shell/dashboard-shell.component.html -->
+<div class="shell-root">
+  <header class="topbar">
+    <div class="left">
+      <button class="icon-btn" (click)="toggleSidebar()" title="Toggle sidebar">☰</button>
+      <div class="brand" (click)="router.navigate(['/features'])">Keezly</div>
+    </div>
+
+    <div class="center">
+      <div class="search">
+        <input placeholder="Search passwords, usernames, urls..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
+        <button (click)="onSearch()" class="search-btn">🔎</button>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="bridge-indicator" [title]="hasBridge ? 'Desktop mode (pywebview)' : 'Development (no bridge)'">
+        {{ hasBridge ? 'Desktop' : 'Dev' }}
+      </div>
+
+      <button class="mac-button small" (click)="lockApp()" title="Lock Keezly">Lock</button>
+    </div>
+  </header>
+
+  <div class="main-area">
+    <aside class="sidebar" [class.hidden]="!showSidebar">
+      <nav>
+        <a routerLink="/features" routerLinkActive="active">Features</a>
+        <a routerLink="/vault" routerLinkActive="active">Vault</a>
+        <a routerLink="/settings" routerLinkActive="active">Settings</a>
+      </nav>
+    </aside>
+
+    <section class="content">
+      <!-- default landing: feature cards are a quick embed for now -->
+      <router-outlet></router-outlet>
+    </section>
+  </div>
+
+  <footer class="app-footer">
+    <div>Keezly — Secure Key Management</div>
+    <div class="version">v0.1</div>
+  </footer>
+</div>

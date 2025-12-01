@@ -10,6 +10,7 @@ interface PyWebViewApi {
   add_or_update_item(item_json_string: string): Promise<{success: boolean, item?: any, message?: string}>;
   generate_password(length: number, complexity: string): Promise<{password: string}>;
   copy_to_clipboard(text: string): Promise<{success: boolean, message: string}>;
+  delete_item(id: number): Promise<{success: boolean, message?: string}>;
 }
 
 // 2. Define the expected structure of the window object
@@ -24,14 +25,16 @@ interface PyWebViewWindow extends Window {
 const pywebviewWindow = window as PyWebViewWindow;
 
 // Define the shape of a key/password item for clarity
-interface KeezlyItem {
+type KeezlyItem = {
   id: number | null;
   title: string;
-  username: string;
+  username?: string;
   password?: string;
   url?: string;
   notes?: string;
-}
+  created_at?: string;
+  updated_at?: string;
+};
 
 // Define the standard API response structure
 interface ApiResponse {
@@ -297,6 +300,30 @@ export class KeezlyApiService {
       } catch (e) {
         return { success: false, message: 'Clipboard API unavailable' };
       }
+    }
+  }
+
+  async deleteItem(id: number): Promise<any> {
+    if (this.hasBridge()) {
+      try {
+        // pywebview API expects a primitive numeric/string param
+        return await this.api.delete_item(id);
+      } catch (e) {
+        console.error('Delete (bridge) failed:', e);
+        return { success: false, message: 'Failed to delete (bridge).' };
+      }
+    }
+
+    // Dev fallback: mutate localStorage
+    try {
+      const raw = localStorage.getItem(this.DEV_STORAGE_KEY);
+      const arr: KeezlyItem[] = raw ? JSON.parse(raw) : [];
+      const newArr = arr.filter(it => Number(it.id) !== Number(id));
+      localStorage.setItem(this.DEV_STORAGE_KEY, JSON.stringify(newArr));
+      return { success: true, item_count: newArr.length };
+    } catch (e) {
+      console.error('Delete (dev) failed:', e);
+      return { success: false, message: 'Failed to delete (dev).' };
     }
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashBoardComponent } from './dash-board-component';
+import { VaultDeleteDialog } from './vault-delete-dialog';
 
-describe('DashBoardComponent', () => {
-  let component: DashBoardComponent;
-  let fixture: ComponentFixture<DashBoardComponent>;
+describe('VaultDeleteDialog', () => {
+  let component: VaultDeleteDialog;
+  let fixture: ComponentFixture<VaultDeleteDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashBoardComponent]
+      imports: [VaultDeleteDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DashBoardComponent);
+    fixture = TestBed.createComponent(VaultDeleteDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
