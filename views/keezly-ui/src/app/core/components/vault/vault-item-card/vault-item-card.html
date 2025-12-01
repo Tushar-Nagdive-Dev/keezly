@@ -33,6 +33,11 @@
             <span *ngIf="!revealing">{{ '•'.repeat(8) }}</span>
           </div>
         </div>
+
+        <div class="field">
+          <label>Description</label>
+          <div class="value url">{{ item.notes || '—' }}</div>
+        </div>
       </div>
     </div>
   </div>
